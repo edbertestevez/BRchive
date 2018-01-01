@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "539651046642",
+    "firebase_url": "https://brchive-a4eca.firebaseio.com",
+    "project_id": "brchive-a4eca",
+    "storage_bucket": "brchive-a4eca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539651046642:android:6c40123a2db55f84",
+        "android_client_info": {
+          "package_name": "com.brchive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539651046642-aoblth2dr7dkmp5k5nr96ieaoepshsq6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.brchive",
+            "certificate_hash": "9f08fde8e21ce1180f8de6351221e5a0461b1d28"
+          }
+        },
+        {
+          "client_id": "539651046642-tdoo7krno4n8ir9vuuc7uv1uqbv5ipnk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHxmjcPt7_V5EK7xZdn2plpK95rW6rSPU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539651046642-tdoo7krno4n8ir9vuuc7uv1uqbv5ipnk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
