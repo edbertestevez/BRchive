@@ -14,17 +14,19 @@ import HomeSelection from '../components/HomeSelection';
 import styles from '../styles/style_main';
 import btnStyles from '../styles/style_buttons';
 
+
 class HomeScreen extends Component {
 
-	componentWillMount(){
-		//schange ni after implement
-		firebase.database().ref("/users/iH0q89QPSCU04kcNcrGwLVXiCw53").on('value', (snapshot) => {
-			if(snapshot.exists()){
-				this.props.actions.updateAccount(snapshot.val());
-			}
-			console.log("VALUE:",snapshot.numChildren());
-		});
-	}
+	
+	// componentWillMount(){
+	// 	//schange ni after implement
+	// 	firebase.database().ref("/users/iH0q89QPSCU04kcNcrGwLVXiCw53").on('value', (snapshot) => {
+	// 		if(snapshot.exists()){
+	// 			this.props.actions.updateAccount(snapshot.key,snapshot.val());
+	// 		}
+	// 		console.log("VALUE:",snapshot.numChildren());
+	// 	});
+	// }
 	render(){
 		const { navigate } = this.props.navigation;
 		console.log(this.props)
@@ -34,7 +36,7 @@ class HomeScreen extends Component {
 				
 				<HomeSelection
 					borrowItems = {()=>navigate("Borrow")}
-					returnItems = {()=>alert("Return")}
+					returnItems = {()=>navigate("Return")}
 				/>
 
 				<View style={styles.footerContainer}>

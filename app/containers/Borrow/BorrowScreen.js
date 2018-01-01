@@ -4,17 +4,19 @@ import { NavigationActions } from 'react-navigation';
 //REDUX
 import { connect } from 'react-redux'
 import {bindActionCreators} from 'redux';
-import {ActionCreators} from '../actions'
+import {ActionCreators} from '../../actions'
 import { BackHandler, ListView } from "react-native";
 //FIREBASE
-import firebaseApp from '../config/firebase';
+import firebaseApp from '../../config/firebase';
 import * as firebase from 'firebase';
 import ResponsiveImage from 'react-native-responsive-image';
-import HomeSelection from '../components/HomeSelection';
-import styles from '../styles/style_main';
-import btnStyles from '../styles/style_buttons';
-import colorStyles from '../styles/style_colors';
+import HomeSelection from '../../components/HomeSelection';
+import styles from '../../styles/style_main';
+import btnStyles from '../../styles/style_buttons';
+import colorStyles from '../../styles/style_colors';
 import {Container, Header, Content, Footer, StyleProvider, Icon, Left, Right, Button, Body, Title, Card, CardItem} from 'native-base';
+
+const { navigateTo } = "";
 
 class BorrowScreen extends Component {
 
@@ -31,9 +33,9 @@ class BorrowScreen extends Component {
 	  
 	}
 
-	getItems(){
+	getItems(accountState){
 		//let items=[{title:'Item One'}, {title: 'Item Two'}];
-		firebase.database().ref("/borrow/iH0q89QPSCU04kcNcrGwLVXiCw53").on('value', (snapshot) => {
+		firebase.database().ref("/borrow/"+accountState.uid).on('value', (snapshot) => {
 			let items = [];
 			console.log("Firebase")
 			if(snapshot.exists()){
@@ -58,24 +60,22 @@ class BorrowScreen extends Component {
 	}
 
 	componentWillMount(){
-		this.getItems();
+		this.getItems(this.props.state.account);
 	}
 
 	componentDidMount(){
 		this.props.navigation.setParams({
-			addBorrow: this.addBorrow
+			addBorrow: this.addBorrow,
 		})
 	}
 
-	addBorrow(){
-		alert("Add Borrow");
-	}
+
 	renderRow(item){
 		const { navigate } = this.props.navigation;
 		return(
 				<TouchableOpacity onPress={()=>navigate("BorrowInfo",{key:item.key, item_name:item.item_name,quantity:item.quantity,borrower:item.borrower,note:item.note})}>
 					<CardItem style={{marginBottom:5}} >
-			          <ResponsiveImage source={require('../img/logo.png')} initWidth="80" initHeight="80" style={{marginLeft:-10}}/>
+			          <ResponsiveImage source={require('../../img/logo.png')} initWidth="80" initHeight="80" style={{marginLeft:-10}}/>
 				
 						<View style={{flexDirection:'column', marginRight:50}}>
 				          <Text style={styles.itemName}>{item.item_name}</Text>
@@ -94,13 +94,17 @@ class BorrowScreen extends Component {
 
 	//**//
 
-	static navigationOptions = {
-        title: "Borrowed Items",
-      	headerRight:
-        <Button transparent onPress={()=>params.addBorrow()}>
-            <Title style={{color:'#000'}}>New </Title>
-            <Icon style={{marginLeft: 0}} name='md-add-circle' />
-        </Button>    
+	static navigationOptions = ({navigation}) => {
+		const {params = {}} = navigation.state;
+        return{
+	        title: "Borrowed Items",
+	      	headerRight:
+	      	//get lng ang navigation parameter to navigate
+	        <Button transparent onPress={()=>navigation.navigate("BorrowAdd")}>
+	            <Title style={{color:'#000'}}>New </Title>
+	            <Icon style={{marginLeft: 0}} name='md-add-circle' />
+	        </Button>
+        }    
     };
 
 	render(){

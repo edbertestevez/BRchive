@@ -7,8 +7,14 @@ import {Container, Header, Content, Footer, StyleProvider, Icon, Left, Right, Bu
 import LoginScreen from './containers/LoginScreen';
 import SplashScreen from './containers/SplashScreen';
 import HomeScreen from './containers/HomeScreen';
-import BorrowScreen from './containers/BorrowScreen';
-import BorrowInfoScreen from './containers/BorrowInfoScreen';
+//BORROW
+import BorrowScreen from './containers/Borrow/BorrowScreen';
+import BorrowInfoScreen from './containers/Borrow/BorrowInfoScreen';
+import BorrowAddScreen from './containers/Borrow/BorrowAddScreen'
+//RETURN
+import ReturnScreen from './containers/Return/ReturnScreen'
+import ReturnInfoScreen from './containers/Return/ReturnInfoScreen'
+import ReturnAddScreen from './containers/Return/ReturnAddScreen'
 
 //EDIT HERE 
 //Navigation ka pages
@@ -37,9 +43,27 @@ export const AppNavigator = StackNavigator({
   }, 
   BorrowInfo:{
     screen: BorrowInfoScreen
+  },
+  BorrowAdd:{
+    screen: BorrowAddScreen,
+    navigationOptions:{
+      title: "New Borrow Record"  
+    }
+  },
+  Return:{
+    screen: ReturnScreen,
+  }, 
+  ReturnInfo:{
+    screen: ReturnInfoScreen
+  },
+  ReturnAdd:{
+    screen: ReturnAddScreen,
+    navigationOptions:{
+      title: "New Return Record",
+    }
   }
 },{
-  initialRouteName: 'Borrow',
+  initialRouteName: 'Splash',
 }
 );	
 	

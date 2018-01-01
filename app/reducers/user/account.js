@@ -1,4 +1,4 @@
-import {LOGIN_USER, LOGOUT_USER, UPDATE_ACCOUNT} from '../../constants'
+import {LOGIN_USER, LOGOUT_USER, UPDATE_ACCOUNT, UPDATE_BORROW_COUNT, UPDATE_RETURN_COUNT} from '../../constants'
 
 //initial values
 const initialState = {
@@ -30,13 +30,26 @@ export default function accountReducer(state = initialState, action){
 		case UPDATE_ACCOUNT:{
 			return{
 				...state,
-				borrowCount: action.data.borrowCount,
-				returnCount: action.data.returnCount,
+				uid: action.key,
 				name: action.data.name,
 				phone: action.data.phone,
 				email: action.data.email
 			}
-		} 
+		}break;
+
+		case UPDATE_BORROW_COUNT:{
+			return{
+				...state,
+				borrowCount: action.data
+			}
+		}break; 
+
+		case UPDATE_RETURN_COUNT:{
+			return{
+				...state,
+				returnCount: action.data
+			}
+		}break; 
 		default: return state
 	}
 }	

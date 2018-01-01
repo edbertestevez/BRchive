@@ -10,8 +10,10 @@ import { BackHandler } from "react-native";
 import firebaseApp from '../config/firebase';
 import * as firebase from 'firebase';
 import ResponsiveImage from 'react-native-responsive-image';
+import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 
 class SplashScreen extends Component {
+
 
 	changeScreen(){
 		alert("LOGGED");
@@ -22,12 +24,32 @@ class SplashScreen extends Component {
 	  this.props.navigation.dispatch(actionToDispatch)	*/
 	}
 
-	checkLog(){
+	checkLog(action){
 		const { navigate } = this.props.navigation;
 		console.log("OK");
 		let route;
 		firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
+				firebase.database().ref("/users/"+user.uid).on('value', (snapshot) => {
+					if(snapshot.exists()){
+						action.updateAccount(snapshot.key,snapshot.val());
+					}
+				});
+
+				firebase.database().ref("/borrow/"+user.uid).on('value', (snapshot) => {
+					if(snapshot.exists()){
+						action.updateBorrowCount(snapshot.numChildren());
+					}
+					console.log("BORROW VALUE:",snapshot.numChildren());
+				});
+
+				firebase.database().ref("/return/"+user.uid).on('value', (snapshot) => {
+					if(snapshot.exists()){
+						action.updateReturnCount(snapshot.numChildren());
+					}
+					console.log("RETURN VALUE:",snapshot.numChildren());
+				});
+
 			   console.log('user logged');
 			   route="Home";
 		    }else{
@@ -47,7 +69,23 @@ class SplashScreen extends Component {
 	}
 
 	componentWillMount(){
-		setTimeout(()=>this.checkLog(), 2000);
+		//schange ni after implement
+		if(this.props.state.account.uid!=""){
+			firebase.database().ref("/users/"+this.props.state.account.uid).on('value', (snapshot) => {
+				if(snapshot.exists()){
+					this.props.actions.updateAccount(snapshot.key,snapshot.val());
+				}
+				console.log("VALUE:",snapshot.numChildren());
+				});
+		}
+		setTimeout(()=>this.checkLog(this.props.actions), 2000);
+
+		//para ma access sa tnan
+		GoogleSignin.configure({
+      	//iosClientId: "<FROM DEVELOPER CONSOLE>", // only for iOS
+     	 webClientId: "539651046642-tdoo7krno4n8ir9vuuc7uv1uqbv5ipnk.apps.googleusercontent.com",
+   		 });
+	
 	}
 
 	render(){
